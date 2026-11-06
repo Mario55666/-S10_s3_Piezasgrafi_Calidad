@@ -5,6 +5,7 @@ Página web de un solo archivo para la actividad **«Operación Gran Formato: di
 - carga tres artes de una producción rechazada con los valores con que se fabricaron;
 - compara esos valores con las especificaciones del proyecto y muestra una vista previa técnica de cada pieza;
 - incluye una infografía interactiva que relaciona la distancia del observador con la resolución de la imagen en 12 productos de publicidad exterior e interior;
+- incluye un asistente con audio, un glosario de 44 términos y ayudas de redacción en el campo de observaciones;
 - asigna insignias y XP por misión superada;
 - genera la ficha técnica de producción en PDF por estudiante.
 
@@ -14,6 +15,29 @@ Página web de un solo archivo para la actividad **«Operación Gran Formato: di
 - Modalidad: individual · evaluación formativa gamificada · 35–45 min · 1000 XP
 - Autor: Mg. Mario Quiroz Martínez, 2026
 - Archivo: `Operacion_Gran_Formato_revision_ficha.html` (≈ 1,3 MB). Lleva incrustados el logotipo del IDC y los tres artes en JPEG de calidad 90, con su tamaño en píxeles original.
+
+---
+
+## Cambios en `Operacion_Gran_Formato_revision_ficha2.html` (2026-11-06)
+
+La resolución requerida ya no se calcula con ppi = 3438 ÷ distancia: sigue una tabla de cinco tramos de distancia. Estas notas prevalecen sobre las secciones 2, 3 y 4.4 de este documento, que describen la versión anterior. `ficha1` se conserva sin cambios.
+
+| Distancia de visualización | Recomendado (ppi) | Mínimo aceptable (ppi) |
+|---|---|---|
+| Menos de 0,6 m | 200–300 | 150 |
+| 0,6–1,5 m | 150–200 | 100 |
+| 1,5–3,0 m | 100–150 | 75 |
+| 3,0–6,0 m | 75–100 | 50 |
+| Más de 6,0 m | 25–50 | 18–24 |
+
+- **Control M01:** Desviación bajo el mínimo, Observación entre el mínimo y lo recomendado, Conforme desde lo recomendado. El archivo a escala 1:10 usa los mismos valores por 10. En los límites compartidos (1,5, 3 y 6 m) rige el tramo más exigente, y en «18–24» se toma 18 para aprobar.
+- **Sección 03:** un banco óptico interactivo reemplaza la escena, la curva y la tabla comparativa. Muestra las 15 piezas de la tabla y sigue a la pieza seleccionada en la revisión, incluido el original solicitado.
+- **Otros cambios:** parámetros de referencia, ayuda del campo de distancia, paso del asistente, nota del PDF y glosario, que suma «Resolución recomendada» y «Mínimo aceptable» (46 términos). Los números se escriben con coma decimal.
+- **Guía del estudiante (nueva):** vista general al inicio y siete pasos dentro de las secciones, que suman 40 minutos. Cada paso indica qué hacer, cómo saber que terminó, qué hacer si se atasca, sus ayudas, su audio, el acceso al asistente y sus términos del glosario, que abren la definición. El asistente usa los mismos pasos. El esquema de observaciones agrega «Hipótesis de la fase OR» y «Contraste con la nomenclatura». El glosario suma ocho términos más (54 en total), entre ellos los que pide la sesión 10.
+- **Mini-caso (sección 05, nueva):** cuatro reportes de instalación con opción múltiple, uno por concepto: resolución efectiva, escala de trabajo, línea de corte, y ojales con margen de refuerzo. Se requieren 3 de 4 aciertos para pasar a la experimentación activa, como indica la sesión 10. Las preguntas acertadas se bloquean con su fundamento y las erradas muestran una pista y se pueden reintentar. No suma XP. La ficha PDF registra el último resultado, el primer intento y el número de intentos. Las secciones Progreso y Ficha técnica pasan a ser la 06 y la 07.
+- **Sesión 10:** esta tabla es la que rige. Ya la incorporan `sesion-10-arte-final-gran-formato-pop_v2.docx`, la diapositiva 5 de `Semana 10 Large_Format_Technical_Blueprint_v2` (.pptx y .pdf) y `Semana 10 Arte_Final_Gran_Formato_v2.mp4`. En ese video, la tabla de 2:21 muestra los cinco tramos y se quitaron las frases que decían los valores anteriores, por lo que dura 14 s menos (7:54); la narración no menciona los valores nuevos.
+- **Por confirmar:** la tabla no cita fuente. Los formatos de las piezas son estimación didáctica. Las cuatro preguntas son una propuesta nueva, porque el documento de la sesión no las redacta; deben revisarse antes de aplicarlas.
+- **Código fuente:** `outputs/2026-11-05-banco-optico-distancia/` en el proyecto; `node build-activity.mjs` genera esta versión a partir de `ficha1`.
 
 ---
 
@@ -57,8 +81,12 @@ Las demasías de 2 y 3 mm, la tolerancia de ±1 mm y el cordón de 12 mm son esp
 
 **Componentes:**
 - **Selector de productos:** 12 productos (tabla siguiente).
-- **Escena animada:**
-  - el observador a la izquierda y la pieza a la distancia elegida, sobre una escala logarítmica de 0,3 a 100 m;
+- **Escena anatómica animada:**
+  - ojo del observador en corte con córnea, iris, cristalino, humor vítreo, retina, fóvea y nervio óptico, y los dos rayos que convergen en la fóvea;
+  - observador de 1,70 m y pieza dibujados con la misma escala vertical (1 px = 10 mm); las piezas más grandes que el área de dibujo se reducen y se rotulan «dibujo reducido»; los habladores, las piezas de señalización y los colgantes se dibujan a su altura de montaje aproximada;
+  - cono visual desde el ojo hasta la pieza y cota de distancia;
+  - leyenda con el detalle mínimo distinguible y la altura angular de la pieza (2 · atan(alto ÷ 2 ÷ distancia));
+  - distancia en escala logarítmica de 0,3 a 100 m;
   - el arte seleccionado en la revisión se imprime sobre la cara de la pieza;
   - al elegir un producto, la pieza se desplaza en 0,7 s hasta su distancia típica; con `prefers-reduced-motion` el cambio es inmediato.
 - **Deslizador de distancia:** escala logarítmica de 0,3 a 100 m.
@@ -213,7 +241,38 @@ Rangos: 900–1000 Maestro de producción gráfica · 750–899 Especialista en 
 
 ---
 
-## 6. Ficha técnica en PDF
+## 6. Asistente con audio, glosario y ayudas de redacción
+
+La voz usa la síntesis del navegador (Web Speech API) y elige una voz en español, en este orden: es-PE, es-419, es-MX, es-US, es-ES. Antes de leer convierte los símbolos a palabras (mm → milímetros, ± → más o menos, × → por, 1:10 → uno a diez). Si el navegador no tiene síntesis de voz, aparece un aviso y el resto de las ayudas funciona sin audio.
+
+- **Botones «Escuchar»:**
+  - en la portada (narrativa de la misión);
+  - en el encabezado de cada sección;
+  - en las tarjetas de misión;
+  - en cada ayuda de campo, en cada término del glosario y en las observaciones del estudiante;
+  - un segundo clic en el mismo botón detiene la lectura, igual que la tecla Escape.
+- **Asistente** (botón flotante abajo a la izquierda):
+  - muestra la pieza seleccionada con su dictamen y el número de controles conformes;
+  - «Escuchar el diagnóstico pendiente» lee cada control no conforme con su misión, su estado y la corrección;
+  - incluye seis pasos guiados (leer la misión, revisar los parámetros, usar la infografía, diagnosticar cada pieza, redactar el fundamento, generar la ficha), cada uno con audio y un botón «Ir» a la sección;
+  - permite elegir la voz, ajustar la velocidad (0,7–1,3) y detener la lectura.
+  - El botón «Escuchar diagnóstico de la pieza» también está en el formulario de revisión.
+- **Ayudas de campo:** un botón «?» en 13 campos (los del formulario y el correo de la ficha) despliega la explicación técnica del campo con su audio.
+- **Glosario:**
+  - diálogo con 44 términos (botón «Glosario», «Abrir glosario» o Alt+G);
+  - buscador sin acentos y filtro por misión;
+  - cada término trae definición, misión, audio y el botón «Insertar en observaciones», que lo coloca donde estaba el cursor.
+- **Ayudas en «Observaciones del revisor»:**
+  - «Insertar esquema de diagnóstico» agrega los encabezados Falla observada · Causa técnica · Corrección aplicada · Fundamento; no redacta el contenido.
+  - Autocompletado: al escribir tres letras aparecen términos del glosario; Tab inserta el primero.
+  - Las mayúsculas del término se ajustan a la posición en la frase; siglas como SEG o CutContour se mantienen.
+  - Fichas de términos por misión (cinco por misión), ordenadas con las misiones pendientes de la pieza primero; un clic inserta el término.
+  - Contador de términos técnicos detectados y cobertura por misión. La misión se marca en verde con dos o más términos y en ámbar si tiene controles pendientes.
+- **Ficha PDF:** debajo de las observaciones de cada pieza, la ficha lista los términos técnicos detectados en el texto.
+
+---
+
+## 7. Ficha técnica en PDF
 
 - **Datos obligatorios:** nombres, apellidos y correo electrónico institucional. El correo se valida en formato.
 - **Contenido** (jsPDF 2.5.1 + jsPDF-AutoTable 3.8.2, A4):
@@ -231,13 +290,14 @@ Rangos: 900–1000 Maestro de producción gráfica · 750–899 Especialista en 
 
 ---
 
-## 7. Estructura del proyecto
+## 8. Estructura del proyecto
 
 ```
 og/
 ├── src.html         marcado, estilos y script principal (revisión, controles, insignias, ficha PDF)
 ├── ig.js            infografía distancia–resolución
-├── build.py         incrusta el logotipo y los tres artes (JPEG, calidad 90) e inserta ig.js
+├── assist.js        asistente con audio, glosario y ayudas de redacción
+├── build.py         incrusta el logotipo y los tres artes (JPEG, calidad 90) e inserta ig.js y assist.js
 ├── index.html       salida de build.py
 └── Operacion_Gran_Formato_revision_ficha.html   copia de entrega
 ```
@@ -247,11 +307,11 @@ python3 build.py      # genera index.html
 cp index.html Operacion_Gran_Formato_revision_ficha.html
 ```
 
-Tecnología: HTML, CSS y JavaScript sin dependencias en la página. Canvas para la vista previa y la vista del observador, SVG para la escena y la curva. Fuentes IBM Plex Sans e IBM Plex Mono (Google Fonts).
+Tecnología: HTML, CSS y JavaScript sin dependencias en la página. Web Speech API para la voz. Canvas para la vista previa y la vista del observador, SVG para la escena y la curva. Fuentes IBM Plex Sans e IBM Plex Mono (Google Fonts).
 
 ---
 
-## 8. Pruebas realizadas
+## 9. Pruebas realizadas
 
 Pruebas en Playwright con Chromium, a 1366 × 900 y 390 × 800 px:
 
@@ -260,18 +320,21 @@ Pruebas en Playwright con Chromium, a 1366 × 900 y 390 × 800 px:
 - **Navegación:** el cambio de pieza actualiza la infografía.
 - **Infografía:** selección de producto, deslizador de distancia y cuadrículas de la vista del observador.
 - **Ficha PDF:** generada y descargada (8 páginas) con la descarga directa del navegador.
+- **Asistente y ayudas** (con síntesis de voz simulada): lectura de la misión y del diagnóstico pendiente; ayuda de campo desplegada; esquema de diagnóstico; autocompletado con Tab; cobertura por misión; inserción desde el glosario en la posición del cursor; lista de términos en la ficha PDF.
 - **Consola:** sin errores.
 
 ---
 
-## 9. Limitaciones
+## 10. Limitaciones
 
 - La cobertura de tinta es una estimación desde RGB sin perfil. El TAC real lo define el perfil de salida del RIP.
 - El «original solicitado» simula un archivo de mayor resolución; el control queda como observación hasta recibirlo.
 - La zona perimetral, los logotipos y los textos no se miden automáticamente; dependen de las confirmaciones del estudiante.
 - Los formatos y distancias de la infografía son estimaciones didácticas.
 - Los artes incluyen marcas registradas de sus titulares, usadas como caso de estudio; por eso la página se distribuye como archivo y no como página publicada.
-- Las cuatro preguntas de opción múltiple del documento de la actividad no están incluidas en esta versión.
+- La calidad y disponibilidad de la voz dependen del navegador y del sistema operativo; algunos equipos no tienen voces en español instaladas.
+- La detección de términos busca coincidencias de palabras y alias; no evalúa si el término está bien usado.
+- Las cuatro preguntas de opción múltiple no están incluidas en `ficha` ni en `ficha1`; `ficha2` las agrega en su sección 05.
 
 ---
 
